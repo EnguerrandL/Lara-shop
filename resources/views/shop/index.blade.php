@@ -10,7 +10,7 @@
 
 
 
-        <h2 class="text-dark text-center">Liste de nos produits</h2>
+        <h2 class="mb-5 mt-5 text-dark text-center">Net'Shop, le meilleur shop du net</h2>
 
 
 
@@ -31,7 +31,7 @@
             <tbody>
                 @foreach ($products as $product)
                     <tr>
-                        <td> <img src="{{ $product->image }}" alt=""></td>
+                        <td> <img width="250px" src="{{ $product->image }}" alt=""></td>
                         <td>{{ $product->name }} </td>
                         <th>{{ $product->price }}</th>
                         <th>{{ $product->quantity }}</th>
@@ -41,20 +41,16 @@
 
                                     <div class="row">
                                         <div class="col">
-                                        <a href="" class="btn btn-success">Voir </a>
+                                        <a href="{{ route('product.show', ['slug' => $product->slug, 'product' => $product]) }}" class="btn btn-success">Voir </a>
                                     </div>
                                         <div class="col">
-                                        <a href="" class="btn btn-success">Acheter</a>
-                                    </div>
-                                        <div class="col">
-                                         
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                
-                                                <option  disabled>Quantité</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                            @include('shared.buyinput')
+
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option disabled selected>Quantité(s)</option>
+                                                @foreach ($availableQuantities as $quantitys)
+                                                <option value="{{ $quantity }}">{{ $quantity }}</option>
+                                                     @endforeach
                                               </select>
                                     </div>
 

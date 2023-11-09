@@ -18,4 +18,27 @@ class Product extends Model
         'image',
         'description'
     ];
-}
+
+
+
+    public function priceByQuantity()
+    {
+        return $this->price * $this->quantity; 
+    }
+
+
+    public function getCurrentQuantity()
+    {
+     
+        $availableQuantities = [];
+
+        for ($i = 1; $i <= $this->quantity; $i++) {
+            $availableQuantities[] = $i;
+        }
+    
+        return $availableQuantities;
+        
+        }
+
+    }
+

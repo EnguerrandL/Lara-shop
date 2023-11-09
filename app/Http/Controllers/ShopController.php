@@ -10,10 +10,13 @@ class ShopController extends Controller
 
 
 
-    public function index(){
+    public function index(Product $product){
+
+        $availableQuantities = $product->getCurrentQuantity();
 
         return view('shop.index', [
-            'products' => Product::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->get()
+            'products' => Product::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->get(),
+            'availableQuantities' => $availableQuantities
         ]);
     }
 
@@ -21,7 +24,7 @@ class ShopController extends Controller
 
     public function show(string $slug, Product $product){
 
-
+        $availableQuantities = $product->getCurrentQuantity();
         $checkSlug = $product->slug;
 
         if ($slug != $checkSlug) {
@@ -30,9 +33,13 @@ class ShopController extends Controller
 
         return view('shop.product', [
             'slug' => $checkSlug,
-            'product' => $product
+            'product' => $product,
+            'availableQuantities' => $availableQuantities
         ]); 
     }
 
+
+
+   
 
 }

@@ -28,10 +28,10 @@ $idRegex = '[0-9]+';
 
 Route::get('/', [ShopController::class, 'index'])->name('shop.index');
 
-Route::get('/products/{slug}-{product}', [ShopController::class, 'show'])->where([
+Route::get('/{slug}-{product}', [ShopController::class, 'show'])->where([
     'slug' => $slugRegex,
     'product' => $idRegex,
-]);
+])->name('product.show');
 
 
 
