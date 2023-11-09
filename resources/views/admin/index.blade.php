@@ -7,7 +7,9 @@
 
     <div class="container-fluid col-10 mx-auto mt-5 ">
         <h2>Administration de vos produits</h2>
+     
         <table class="table table-dark table-hover">
+            <a href="{{ route('products.create')}}"  class=" btn btn-primary">Ajouter un produit</a>
 
             <thead>
                 <tr>
@@ -22,7 +24,7 @@
                 @foreach ($products as $product)
                     <tr>
                         <td> <img src="{{ $product->image }}" alt=""></td>
-                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->name }} </td>
                         <th>{{ $product->price }}</th>
                         <th>{{ $product->quantity }}</th>
                         <td style="width: 20%;">

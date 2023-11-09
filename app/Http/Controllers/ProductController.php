@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProductRequestForm;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -27,15 +29,22 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequestForm $request, Product $product)
     {
-        //
+        $validatedData = $request->validated(); 
+        $validatedData['slug'] = Str::slug($request->name);
+        $product = Product::create($validatedData);
+
+        $product->save();
+
+
+        return redirect()->route('admin.index')->with('');
     }
 
     /**
