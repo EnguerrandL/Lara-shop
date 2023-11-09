@@ -7,9 +7,9 @@
 
     <div class="container-fluid col-10 mx-auto mt-5 ">
         <h2>Administration de vos produits</h2>
-     
+
         <table class="table table-dark table-hover">
-            <a href="{{ route('products.create')}}"  class=" btn btn-primary">Ajouter un produit</a>
+            <a href="{{ route('products.create') }}" class=" btn btn-primary">Ajouter un produit</a>
 
             <thead>
                 <tr>
@@ -29,12 +29,16 @@
                         <th>{{ $product->quantity }}</th>
                         <td style="width: 20%;">
                             <div class="d-flex">
-                                <div >
+                                <div>
                                     <button class="btn btn-warning">Éditer le produit</button>
                                 </div>
-                                <div >
-                                    <form action="" method="post">
-                                        <a href="" class="btn btn-danger">Supprimer</a>
+                                <div>
+                                    <form action=" {{ route('products.destroy', $product->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+
+
+                                        <button class="btn btn-danger">Supprimer</button>
                                     </form>
                                 </div>
                             </div>

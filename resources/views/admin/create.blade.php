@@ -14,14 +14,10 @@
         <h2 class="text-white">Ajouter un nouveau produit</h2>
 
 
-
-
-
-
         <div class="mt-5 container">
             <div class="row">
-                <form class="row" action="" method="post">
-
+                <form class="row" action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
+                    
                     @csrf
                     <div class="col">
                         @include('shared.input', [

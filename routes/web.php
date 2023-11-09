@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
+
+
+$slugRegex = '[0-9a-z\-]+';
+$idRegex = '[0-9]+';
+
+//Shop 
+
+Route::get('/', [ShopController::class, 'index'])->name('shop.index');
+
+Route::get('/products/{slug}-{product}', [ShopController::class, 'show'])->where([
+    'slug' => $slugRegex,
+    'product' => $idRegex,
+]);
+
+
+
+
+// Admin panel
 
 Route::resource('admin/products', ProductController::class);

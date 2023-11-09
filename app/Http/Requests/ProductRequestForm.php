@@ -24,7 +24,7 @@ class ProductRequestForm extends FormRequest
         return [
             'name' => ['required'],
             'price' => ['required'],
-            'slug' => ['required'],
+            'slug' => ['nullable'],
             'quantity' => ['required'],
             'description' => ['required'],
             'image' => ['nullable']

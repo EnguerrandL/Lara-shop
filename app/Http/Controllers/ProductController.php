@@ -20,7 +20,7 @@ class ProductController extends Controller
 
 
         return view('admin.index', [
-            'products' => Product::all()
+            'products' => Product::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->get()
         ]);
     }
 
@@ -37,14 +37,17 @@ class ProductController extends Controller
      */
     public function store(ProductRequestForm $request, Product $product)
     {
+        
         $validatedData = $request->validated(); 
+    
+   
         $validatedData['slug'] = Str::slug($request->name);
         $product = Product::create($validatedData);
-
+       
         $product->save();
+    
 
-
-        return redirect()->route('admin.index')->with('');
+        return redirect()->route('products.index')->with(['message' => 'Produit ajouté avec succès', 'class' => 'success']);
     }
 
     /**
@@ -74,8 +77,10 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy( Product $product)
     {
-        //
+     
+        $product->delete();
+       return back()->with(['message' => 'Le produit à été supprimé avec succès', 'class' => 'danger']);
     }
 }
