@@ -9,5 +9,11 @@ class Order extends Model
 {
     use HasFactory;
 
-    
+
+    public function orderItem(){
+
+        $this->belongsToMany(OrderItem::class);
+    }
+
+
 }

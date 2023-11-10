@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
@@ -39,3 +40,6 @@ Route::get('/{slug}-{product}', [ShopController::class, 'show'])->where([
 // Admin panel
 
 Route::resource('admin/products', ProductController::class);
+
+
+Route::get('admin/orders', [OrderController::class, 'index'])->name('order.index');

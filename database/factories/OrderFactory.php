@@ -17,9 +17,9 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            
+
             'order_date' => fake()->dateTimeThisMonth(),
-            'total_amount' => fake()->randomFloat(2, 50, 500),
+            'total_ammount' => fake()->randomFloat(2, 50, 500),
         ];
     }
 }
