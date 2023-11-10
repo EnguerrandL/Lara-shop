@@ -13,9 +13,7 @@
       </select>
 
 
-    <button class="btn btn-success">
-    Acheter
-    </button>
+  <a href="{{ route('cart.index',  $orderItem) }}" class="btn btn-success">Acheter</a>
 
 
 

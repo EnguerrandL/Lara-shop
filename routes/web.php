@@ -35,6 +35,11 @@ Route::get('/{slug}-{product}', [ShopController::class, 'show'])->where([
 ])->name('product.show');
 
 
+ // cart 
+
+
+ Route::get('/cart/{order}', [CartController::class, 'index' ])->name('cart.index'); 
+
 
 
 // Admin panel

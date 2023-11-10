@@ -46,13 +46,7 @@
                                         <div class="col">
                                             @include('shared.buyinput')
 
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option disabled selected>Quantité(s)</option>
-                                                @foreach ($availableQuantities as $quantitys)
-                                                <option value="{{ $quantity }}">{{ $quantity }}</option>
-                                                     @endforeach
-                                              </select>
-                                    </div>
+                                       
 
                                     </div>
                                 </div>
