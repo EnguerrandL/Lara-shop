@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Database\Seeder;
 
@@ -22,9 +23,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-
-        Product::factory(10)->create();
+        Product::factory(20)->create();
         Order::factory(10)->create();
         Product::factory(10)->create();
+        OrderItem::factory(50)->create();
     }
 }

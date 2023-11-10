@@ -43,3 +43,4 @@ Route::resource('admin/products', ProductController::class);
 
 
 Route::get('admin/orders', [OrderController::class, 'index'])->name('order.index');
+Route::delete('admin/orders/{order}', [OrderController::class ,'deleteOrder'])->name('order.delete');

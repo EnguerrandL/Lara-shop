@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->dateTime('order_date');
-            $table->decimal('total_ammount', 8, 2);
+            $table->decimal('total_amount', 8, 2);
         });
     }
 
