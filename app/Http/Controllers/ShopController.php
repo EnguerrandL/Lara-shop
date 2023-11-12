@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -16,7 +18,11 @@ class ShopController extends Controller
 
         return view('shop.index', [
             'products' => Product::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->get(),
-            'availableQuantities' => $availableQuantities
+            'availableQuantities' => $availableQuantities,
+            'orderItem' => OrderItem::with('product')->get(), 
+            'product' => $product,
+            
+       
         ]);
     }
 

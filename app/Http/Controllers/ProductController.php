@@ -27,9 +27,11 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Product $product)
     {
-        return view('admin.create');
+        return view('admin.create', [
+            'product' => $product, 
+        ]);
     }
 
     /**
@@ -61,17 +63,26 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
-        //
+
+        dd('sqdqs');
+        return view('admin.edit', [
+            'product' => $product,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ProductRequestForm $request, Product $product)
     {
-        //
+        $validatedData = $request->validated(); 
+
+        $product->update($validatedData); 
+
+        return redirect()->route('products.index')
+        ->with(['message' => 'le produit : ' . $product->name .  ' à été éditer avec succès', 'class' => 'success']);
     }
 
     /**

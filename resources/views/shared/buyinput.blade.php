@@ -7,13 +7,18 @@
 
     <select class="form-select" aria-label="Default select example">
         <option disabled selected>Quantité(s)</option>
+
+  
         @foreach ($availableQuantities as $quantity)
         <option value="{{ $quantity }}">{{ $quantity }}</option>
              @endforeach
       </select>
 
 
-  <a href="{{ route('cart.index',  $orderItem) }}" class="btn btn-success">Acheter</a>
+        
+                
+          
+  <a href="" class="btn btn-success">Acheter</a>
 
 
 

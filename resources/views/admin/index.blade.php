@@ -30,7 +30,9 @@
                         <td style="width: 20%;">
                             <div class="d-flex">
                                 <div>
-                                    <button class="btn btn-warning">Éditer le produit</button>
+                    
+                                    <a href="{{ route('products.update', $product) }}" class="btn btn-warning">
+                                        Éditer le produit</a>
                                 </div>
                                 <div>
                                     <form action=" {{ route('products.destroy', $product->id) }}" method="post">
