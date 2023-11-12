@@ -15,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
 
-        
+
 
 
 
@@ -30,7 +30,7 @@ class ProductController extends Controller
     public function create(Product $product)
     {
         return view('admin.create', [
-            'product' => $product, 
+            'product' => $product,
         ]);
     }
 
@@ -39,15 +39,15 @@ class ProductController extends Controller
      */
     public function store(ProductRequestForm $request, Product $product)
     {
-        
-        $validatedData = $request->validated(); 
-    
-   
+
+        $validatedData = $request->validated();
+
+
         $validatedData['slug'] = Str::slug($request->name);
         $product = Product::create($validatedData);
-       
+
         $product->save();
-    
+
 
         return redirect()->route('products.index')->with(['message' => 'Produit ajouté avec succès', 'class' => 'success']);
     }
@@ -66,7 +66,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
 
-        dd('sqdqs');
+
+
         return view('admin.edit', [
             'product' => $product,
         ]);
@@ -77,21 +78,26 @@ class ProductController extends Controller
      */
     public function update(ProductRequestForm $request, Product $product)
     {
-        $validatedData = $request->validated(); 
+        $validatedData = $request->validated();
 
-        $product->update($validatedData); 
+        $product->update($validatedData);
+
+        $product->slug = Str::slug($request->name);
+
+        $product->save();
+
 
         return redirect()->route('products.index')
-        ->with(['message' => 'le produit : ' . $product->name .  ' à été éditer avec succès', 'class' => 'success']);
+            ->with(['message' => 'le produit : ' . $product->name .  ' à été éditer avec succès', 'class' => 'success']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( Product $product)
+    public function destroy(Product $product)
     {
-     
+
         $product->delete();
-       return back()->with(['message' => 'Le produit à été supprimé avec succès', 'class' => 'danger']);
+        return back()->with(['message' => 'Le produit à été supprimé avec succès', 'class' => 'danger']);
     }
 }

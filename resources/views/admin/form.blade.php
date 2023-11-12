@@ -15,10 +15,13 @@
 
         <div class="mt-5 container">
             <div class="row">
-                <form class="row" action="{{ route($product->exists ? 'admin.update' : 'products.store', ['product' => $product]) }}" method="post" enctype="multipart/form-data">
+                <form class="row" action="{{ route($product->exists ? 'products.update' : 'products.store', ['product' => $product]) }}" method="post" enctype="multipart/form-data">
 
                     @csrf
                     @method($product->exists ? 'PATCH' : 'POST')
+
+                    
+
                     <div class="col">
                         @include('shared.input', [
                             'label' => 'Nom du produit',

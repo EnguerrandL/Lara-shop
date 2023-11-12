@@ -24,7 +24,7 @@
                         <td>
                             <ul class="list-group-item list-group-item-action list-group-item-dark">
                                 @foreach ($order->orderItems as $orderItem)
-                                    <li class="list-group-item">{{ $orderItem->product->name }} - {{ 'Quantité(s) : ' .  $orderItem->quantity }}</li>
+                                    <li class="list-group-item">{{ $orderItem }} - {{ 'Quantité(s) : ' .  $orderItem->quantity }}</li>
                                 @endforeach
                             </ul>
                         </td>

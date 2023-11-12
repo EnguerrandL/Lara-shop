@@ -18,7 +18,8 @@ class OrderController extends Controller
      
 
         return view('order.index', [
-            'orders' => Order::with('orderItems')->get()
+            'orders' => Order::with('orderItems')->get(),
+            
         ] );
 
 

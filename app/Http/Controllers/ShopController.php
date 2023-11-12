@@ -12,40 +12,37 @@ class ShopController extends Controller
 
 
 
-    public function index(Product $product){
+    public function index()
+    {
 
-        $availableQuantities = $product->getCurrentQuantity();
+        $products = Product::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->get();
+
+        foreach ($products as $product) {
+            $product->availableQuantities = range(1, $product->quantity);
+        }
 
         return view('shop.index', [
-            'products' => Product::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->get(),
-            'availableQuantities' => $availableQuantities,
-            'orderItem' => OrderItem::with('product')->get(), 
-            'product' => $product,
-            
-       
+            'products' => $products,
+            'orderItem' => OrderItem::with('product')->get(),
         ]);
     }
 
 
 
-    public function show(string $slug, Product $product){
+    public function show(string $slug, Product $product)
+    {
 
         $availableQuantities = $product->getCurrentQuantity();
         $checkSlug = $product->slug;
 
         if ($slug != $checkSlug) {
-            return to_route('shop.index', ['slug' => $checkSlug, 'product' => $product]);
+            return redirect()->route('shop.index', ['slug' => $checkSlug, 'product' => $product]);
         }
 
         return view('shop.product', [
             'slug' => $checkSlug,
             'product' => $product,
             'availableQuantities' => $availableQuantities
-        ]); 
+        ]);
     }
-
-
-
-   
-
 }

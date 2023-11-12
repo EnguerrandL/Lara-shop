@@ -31,7 +31,7 @@
                             <div class="d-flex">
                                 <div>
                     
-                                    <a href="{{ route('products.update', $product) }}" class="btn btn-warning">
+                                    <a href="{{ route('products.edit', $product) }}" class="btn btn-warning">
                                         Éditer le produit</a>
                                 </div>
                                 <div>
