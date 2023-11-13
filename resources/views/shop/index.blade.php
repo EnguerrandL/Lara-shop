@@ -43,12 +43,12 @@
                                         <div class="col">
                                         <a href="{{ route('product.show', ['slug' => $product->slug, 'product' => $product]) }}" class="btn btn-success">Voir </a>
                                     </div>
-                                        <div class="col">
+                                       
                                             @include('shared.buyinput')
 
-                                       
+                                          
 
-                                    </div>
+                                 
                                 </div>
 
                             </div>
@@ -63,7 +63,7 @@
 
 
 
-
+        
 
 
 

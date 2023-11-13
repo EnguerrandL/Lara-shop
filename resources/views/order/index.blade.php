@@ -10,8 +10,8 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Date</th>
-                    <th scope="col">Montant total</th>
                     <th scope="col">Produits commandés</th>
+                    <th scope="col">Montant total</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -19,12 +19,8 @@
                 @foreach ($orders as $order)
                     <tr>
                         <td>{{ $order->id }} </td>
-                        <td>{{ 'Date de la commande : ' . $order->order_date }}</td>
-                        <td>{{ $order->total_amount . ' €' }}</td>
+                        <td>{{ $order->order_date }}</td>
                         <td>
-
-
-
                             <ul>
                                 @foreach ($order->orderItems as $orderItem)
                                     <li>
@@ -38,9 +34,9 @@
                                     </li>
                                 @endforeach
                             </ul>
-
-
                         </td>
+                        <td>{{ $order->getTotalAmount() . ' €' }}</td>
+
                         <td style="width: 20%;">
                             <div class="d-flex">
                                 <div>

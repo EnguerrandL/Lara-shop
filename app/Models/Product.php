@@ -10,11 +10,11 @@ class Product extends Model
     use HasFactory;
 
 
-     protected $fillable = [
+    protected $fillable = [
         'name',
         'slug',
         'price',
-        'quantity', 
+        'quantity',
         'image',
         'description'
     ];
@@ -23,22 +23,23 @@ class Product extends Model
 
     public function priceByQuantity()
     {
-        return $this->price * $this->quantity; 
+        return $this->price * $this->quantity;
     }
 
+    public function getAvailableQuantitiesAttribute()
+    {
+        return range(0, $this->quantity);
+    }
 
     public function getCurrentQuantity()
     {
-     
+
         $availableQuantities = [];
 
         for ($i = 1; $i <= $this->quantity; $i++) {
             $availableQuantities[] = $i;
         }
-    
+
         return $availableQuantities;
-        
-        }
-
     }
-
+}

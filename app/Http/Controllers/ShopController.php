@@ -15,15 +15,13 @@ class ShopController extends Controller
     public function index()
     {
 
-        $products = Product::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->get();
-
-        foreach ($products as $product) {
-            $product->availableQuantities = range(1, $product->quantity);
-        }
 
         return view('shop.index', [
-            'products' => $products,
-            'orderItem' => OrderItem::with('product')->get(),
+            'products' =>  Product::orderBy('updated_at', 'DESC')
+            ->orderBy('created_at', 'DESC')
+            ->get(),
+            'product' => Product::all()
+        
         ]);
     }
 
@@ -33,6 +31,8 @@ class ShopController extends Controller
     {
 
         $availableQuantities = $product->getCurrentQuantity();
+
+       
         $checkSlug = $product->slug;
 
         if ($slug != $checkSlug) {

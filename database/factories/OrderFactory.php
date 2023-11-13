@@ -19,7 +19,6 @@ class OrderFactory extends Factory
         return [
 
             'order_date' => fake()->dateTimeThisMonth(),
-            'total_amount' => fake()->randomFloat(2, 50, 500),
         ];
     }
 }
