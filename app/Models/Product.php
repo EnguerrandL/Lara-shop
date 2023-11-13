@@ -28,7 +28,7 @@ class Product extends Model
 
     public function getAvailableQuantitiesAttribute()
     {
-        return range(0, $this->quantity);
+        return range(1, $this->quantity);
     }
 
     public function getCurrentQuantity()

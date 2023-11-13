@@ -38,9 +38,9 @@ Route::get('/{slug}-{product}', [ShopController::class, 'show'])->where([
 
  // cart 
 
-
- Route::get('/cart/{order}', [CartController::class, 'index' ])->name('cart.index'); 
-
+ Route::get('/cart', [CartController::class, 'cartShow'])->name('cart.show');
+ Route::post('/cart/add/{product}', [CartController::class, 'addToCart'])->name('cart.addToCart');
+ Route::delete('cart/{prudct}', [CartController::class, 'deleteItem'])->name('item.delete');
 
 
 // Admin panel
