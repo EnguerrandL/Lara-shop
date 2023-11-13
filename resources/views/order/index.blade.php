@@ -22,11 +22,24 @@
                         <td>{{ 'Date de la commande : ' . $order->order_date }}</td>
                         <td>{{ $order->total_amount . ' €' }}</td>
                         <td>
-                            <ul class="list-group-item list-group-item-action list-group-item-dark">
+
+
+
+                            <ul>
                                 @foreach ($order->orderItems as $orderItem)
-                                    <li class="list-group-item">{{ $orderItem }} - {{ 'Quantité(s) : ' .  $orderItem->quantity }}</li>
+                                    <li>
+                                        @if ($orderItem->product)
+                                            ({{ $orderItem->quantity }})
+                                            {{ $orderItem->product->name }}
+                                            || Prix unitaire : {{ $orderItem->unit_price }} €
+                                        @else
+                                            Produit non trouvé
+                                        @endif
+                                    </li>
                                 @endforeach
                             </ul>
+
+
                         </td>
                         <td style="width: 20%;">
                             <div class="d-flex">
