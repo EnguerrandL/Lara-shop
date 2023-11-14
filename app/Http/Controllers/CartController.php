@@ -8,20 +8,23 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
 
 
-    public function addToCart(Product $product)
+    public function addToCart(Product $product, Request $request)
     {
+
+
+        $productQuantity =  $request->input('quantity');
 
         Cart::updateOrCreate([
 
             'product_id' => $product->id,
+            'price' => $product->price
         ], [
-            'quantity' => request('quantity', 1),
+            'quantity' => $productQuantity,
         ]);
 
         return back()->with(['message' => 'Produit ajouté avec succès', 'class' => 'success']);
@@ -31,11 +34,15 @@ class CartController extends Controller
     public function cartShow()
     {
 
-        $cartContent = Cart::with('product')->get();
 
-
+        $cartContent = Cart::with('products')->get();
+    
+      
+        // $cartContent = Cart::with('product')->get();
+      
         return view('cart.cart', [
             'cartContent' => $cartContent,
+            // 'totalAmount' => $totalAmount,
         ]);
     }
 

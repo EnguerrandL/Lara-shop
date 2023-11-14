@@ -43,9 +43,10 @@
                         <tr>
                             <td> <img width="250px" src="{{ $cartItem->product->image }}" alt=""></td>
                             <td>{{ $cartItem->product->name }}</td>
-                            <th>{{ $cartItem->product->quantity }}</th>
+                            <th>{{ $cartItem->quantity }}</th>
                             <th>{{ $cartItem->product->price }} €</th>
-                            <th>{{ $cartItem->product->priceByQuantity() }} €</th>
+                            <th>{{ $cartItem->priceByQuantity() }} €</th>
+                        </th>
                             <th>€</th>
                             <td style="width: 30%;">
                                 <form method="POST" action=" {{ route('item.delete', $cartItem->id) }}">
@@ -66,7 +67,7 @@
             <table class="table table-hover table-dark">
                 <thead>
                     <tr>
-                        <th scope="col">Prix HT</th>
+                        <th scope="col">Prix HT </th>
                         <th scope="col">Prix TTC</th>
                         <th scope="col"> <a href="" class="btn btn-warning">téléharger le pdf</a></th>
 
@@ -75,7 +76,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>HT €</td>
+                        <td>HT  €</td>
                         <td>TTC €</td>
 
                         <td> <a href="" class="btn btn-primary">Payer votre commande</a></td>

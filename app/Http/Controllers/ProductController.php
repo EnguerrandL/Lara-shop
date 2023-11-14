@@ -42,6 +42,10 @@ class ProductController extends Controller
 
         $validatedData = $request->validated();
 
+        $fileName = time() . '.' . $request->image->extension();
+        $request->image->storeAs('public', $fileName);
+
+        $product->image  = $fileName;
 
         $validatedData['slug'] = Str::slug($request->name);
         $product = Product::create($validatedData);

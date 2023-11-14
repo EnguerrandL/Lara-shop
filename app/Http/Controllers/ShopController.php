@@ -20,7 +20,7 @@ class ShopController extends Controller
             'products' =>  Product::orderBy('updated_at', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->get(),
-            'product' => Product::all()
+          
         
         ]);
     }
@@ -30,7 +30,7 @@ class ShopController extends Controller
     public function show(string $slug, Product $product)
     {
 
-        $availableQuantities = $product->getCurrentQuantity();
+      
 
        
         $checkSlug = $product->slug;
@@ -42,7 +42,7 @@ class ShopController extends Controller
         return view('shop.product', [
             'slug' => $checkSlug,
             'product' => $product,
-            'availableQuantities' => $availableQuantities
+         
         ]);
     }
 }

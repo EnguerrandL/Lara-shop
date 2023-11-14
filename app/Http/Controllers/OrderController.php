@@ -9,25 +9,18 @@ class OrderController extends Controller
 {
 
 
-    public function index(){
-
-
-        // dd(Order::with('orderItems'));
-
-     
-     
+    public function index()
+    {
 
         return view('order.index', [
             'orders' => Order::with('orderItems.product')->get(),
-            
-        ] );
 
-
-
+        ]);
     }
 
 
-    public function deleteOrder(Order $order){
+    public function deleteOrder(Order $order)
+    {
 
         $order->delete();
 
