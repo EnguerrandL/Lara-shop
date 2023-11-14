@@ -10,7 +10,7 @@
         <h3>Votre commande : </h3>
 
 
-        {{ $cartContent }}
+        {{ $cartItems }}
 
 
 
@@ -39,7 +39,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($cartContent as $cartItem)
+                    @foreach ($cartItems as $cartItem)
                         <tr>
                             <td> <img width="250px" src="{{ $cartItem->product->image }}" alt=""></td>
                             <td>{{ $cartItem->product->name }}</td>
@@ -76,8 +76,8 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>HT  €</td>
-                        <td>TTC €</td>
+                        <td> {{  $totalAmountWithoutTax }} €</td>
+                        <td>{{  $totalAmoutWithTax }} €</td>
 
                         <td> <a href="" class="btn btn-primary">Payer votre commande</a></td>
                     </tr>

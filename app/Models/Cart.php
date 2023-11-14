@@ -23,36 +23,14 @@ class Cart extends Model
 
 
     public function products()
-{
-    return $this->hasMany(Product::class, 'id', 'product_id');
-}
+    {
+        return $this->hasMany(Product::class, 'id', 'product_id');
+    }
+
 
 
     public function priceByQuantity()
     {
         return $this->product->price * $this->quantity;
     }
-
-
-    public function totalPriceWithoutTax()
-    {
-        return $this->products->sum(function ($product) {
-            return $product->price * $product->quantity;
-        });
-    }
-
-
-    // public function totalPriceWithoutTax()
-    // {
-    //     $amount = 0;
-
-    //     foreach ($this->product as $product) {
-
-    //         $amount += $product->price * $product->quantity;
-
-    //         return $amount;
-    //     }
-
-    //     return $amount;
-    // }
 }
