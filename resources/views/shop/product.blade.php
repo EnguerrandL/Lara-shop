@@ -11,7 +11,7 @@
 
             <h5 class="text-dark text-center">{{ $product->name }}</h5>
 
-            <img src="{{ $product->image }}" class="img-fluid" alt="...">
+            <img src="{{ $product->imgUrl() }}" class="img-fluid" alt="...">
             <p>Prix: {{ $product->price . ' €' }}</p>
             <p>{{ $product->description }}</p>
             <p>{{ 'Stock disponible : ' . $product->quantity }}</p>

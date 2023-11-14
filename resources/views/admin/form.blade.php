@@ -15,12 +15,14 @@
 
         <div class="mt-5 container">
             <div class="row">
-                <form class="row" action="{{ route($product->exists ? 'products.update' : 'products.store', ['product' => $product]) }}" method="post" enctype="multipart/form-data">
+                <form class="row"
+                    action="{{ route($product->exists ? 'products.update' : 'products.store', ['product' => $product]) }}"
+                    method="post" enctype="multipart/form-data">
 
                     @csrf
                     @method($product->exists ? 'PATCH' : 'POST')
 
-                    
+
 
                     <div class="col">
                         @include('shared.input', [
@@ -54,13 +56,27 @@
 
                     </div>
                     <div class="col">
+
+
+                   
+
+
+
                         @include('shared.input', [
-                            'label' => 'Photo du produit',
-                            'name' => 'image',
+                            'label' => $product->image ? 'Changer la photo du produit' : 'Photo du produit',                                                                                  
+                           'name' => 'image',
                             'type' => 'file',
                             'class' => '',
                             'value' => $product->image,
                         ])
+
+
+                        @if ($product->image)
+                            <img src="{{ $product->imgUrl() }}" 
+                            alt="{{ $product->name }}" 
+                            class="mt-2 img-thumbnail">
+                        @endif
+
 
                     </div>
 

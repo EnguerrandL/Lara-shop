@@ -23,7 +23,9 @@
             <tbody>
                 @foreach ($products as $product)
                     <tr>
-                        <td> <img width="50px" src="{{ $product->imgUrl() }}" alt=""></td>
+                        <td> <img width="50px" src="{{$product->imgUrl() }}" alt=""></td>
+                 
+                   
                         <td>{{ $product->name }} </td>
                         <th>{{ $product->price }}</th>
                         <th>{{ $product->quantity }}</th>

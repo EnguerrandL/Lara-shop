@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequestForm;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
@@ -42,31 +43,31 @@ class ProductController extends Controller
 
         $validatedData = $request->validated();
 
-        $fileName = time() . '.' . $request->image->extension();
-        $request->image->storeAs('public', $fileName);
+        $image = $request->validated('image');
+        $filename = uniqid() . '_' .  $image->getClientOriginalName();
 
-        $product->image  = $fileName;
+        if ($image != null && !$image->getError()) {
+            $validatedData['image'] = $image->storeAs('produits', $filename, 'public');
+        }
+
+        if ($product->image) {
+
+            Storage::disk('public')->delete($product->image);
+        }
+
+
+
 
         $validatedData['slug'] = Str::slug($request->name);
         $product = Product::create($validatedData);
 
         $product->save();
 
-
-        return redirect()->route('products.index')->with(['message' => 'Produit ajouté avec succès', 'class' => 'success']);
+        return redirect()->route('products.index')
+            ->with(['message' => 'Produit ajouté avec succès', 'class' => 'success']);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Product $product)
     {
 
@@ -83,6 +84,23 @@ class ProductController extends Controller
     public function update(ProductRequestForm $request, Product $product)
     {
         $validatedData = $request->validated();
+
+
+        $image = $request->validated('image');
+        $filename = uniqid() . '_' .  $image->getClientOriginalName();
+
+        if ($image != null && !$image->getError()) {
+            $validatedData['image'] = $image->storeAs('produits', $filename, 'public');
+        }
+
+        if ($product->image) {
+
+            Storage::disk('public')->delete($product->image);
+        }
+
+
+
+
 
         $product->update($validatedData);
 

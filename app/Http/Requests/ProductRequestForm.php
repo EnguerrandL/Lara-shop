@@ -27,7 +27,7 @@ class ProductRequestForm extends FormRequest
             'slug' => ['nullable'],
             'quantity' => ['required'],
             'description' => ['required'],
-            'image' => ['nullable']
+            'image' => ['required']
         ];
     }
 }

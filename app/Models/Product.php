@@ -30,16 +30,17 @@ class Product extends Model
     }
 
 
+
     public function imgUrl(): string
-{
-    if (Str::contains($this->images, 'placeholder')) {
-        return $this->images; 
-    } else {
-       
-        return asset(Storage::disk('public')->url($this->images));
+    {
+        if (Str::contains($this->image, 'placeholder')) {
+            return $this->image;
+        } else {
+
+            return asset(Storage::disk('public')->url($this->image));
+        }
     }
-}
-    
+
 
     public function getCurrentQuantity()
     {
