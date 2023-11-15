@@ -22,25 +22,13 @@ class CartController extends Controller
         $productQuantity =  $request->input('quantity');
 
         Cart::firstOrCreate([
+            'user_id' => $user->id,
             'product_id' => $product->id,
             'price' => $product->price
         ], [
             'quantity' => $productQuantity,
         ]);
 
-       $order =  Order::create([
-            'user_id' => $user->id,
-            'order_date' => Carbon::now()
-        ]);
-
-
-        OrderItem::create([
-            'user_id' => $user->id,
-            'order_id' =>  $order->id,
-            'product_id' => $product->id,
-            'quantity' => $productQuantity,
-            'unit_price' => $product->price,
-        ]);
 
 
 
