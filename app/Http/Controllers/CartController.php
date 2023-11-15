@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -20,7 +21,6 @@ class CartController extends Controller
         $productQuantity =  $request->input('quantity');
 
         Cart::updateOrCreate([
-
             'product_id' => $product->id,
             'price' => $product->price
         ], [
@@ -31,8 +31,15 @@ class CartController extends Controller
     }
 
 
-    public function cartShow(Cart $cart)
+    public function cartShow(User $user, Cart $cart, Order $order)
     {
+
+        $order = new Order(); 
+
+        dd($order);
+
+        $user = User::find(1);
+
         $totalAmountWithoutTax = 0;
       
 
@@ -53,6 +60,8 @@ class CartController extends Controller
             'cartItems' => $cartItems,
             'totalAmountWithoutTax' =>  $totalAmountWithoutTax,
             'totalAmoutWithTax' => $totalAmoutWithTax,
+            'user' => $user,
+            'order' => $order
         ]);
     }
 

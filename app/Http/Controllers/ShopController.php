@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -20,6 +21,7 @@ class ShopController extends Controller
             'products' =>  Product::orderBy('updated_at', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->get(),
+            'user' => User::find(1),
           
         
         ]);

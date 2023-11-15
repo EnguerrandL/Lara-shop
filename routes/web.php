@@ -4,6 +4,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,13 @@ use Illuminate\Support\Facades\Route;
 $slugRegex = '[0-9a-z\-]+';
 $idRegex = '[0-9]+';
 
+
+// Admin panel
+
+Route::resource('admin/products', ProductController::class);
+Route::get('admin/orders', [OrderController::class, 'index'])->name('order.index');
+Route::delete('admin/orders/{order}', [OrderController::class, 'deleteOrder'])->name('order.delete');
+
 //Shop 
 
 Route::get('/', [ShopController::class, 'index'])->name('shop.index');
@@ -36,17 +44,15 @@ Route::get('/{slug}-{product}', [ShopController::class, 'show'])->where([
 ])->name('product.show');
 
 
- // cart 
+// cart 
 
- Route::get('/cart', [CartController::class, 'cartShow'])->name('cart.show');
- Route::post('/cart/add/{product}', [CartController::class, 'addToCart'])->name('cart.addToCart');
- Route::delete('cart/{prudct}', [CartController::class, 'deleteItem'])->name('item.delete');
-
-
-// Admin panel
-
-Route::resource('admin/products', ProductController::class);
+Route::get('/cart/{user}', [CartController::class, 'cartShow'])->name('cart.show');
+Route::post('/cart/add/{product}', [CartController::class, 'addToCart'])->name('cart.addToCart');
+Route::delete('cart/{prudct}', [CartController::class, 'deleteItem'])->name('item.delete');
 
 
-Route::get('admin/orders', [OrderController::class, 'index'])->name('order.index');
-Route::delete('admin/orders/{order}', [OrderController::class ,'deleteOrder'])->name('order.delete');
+//  Checkout & payment 
+
+
+Route::post('/cart/{order}', [StripeController::class, 'successPayment'])->name('order.payment');
+Route::get('/order/{order}', [StripeController::class, 'customerOrder'])->name('order.success');

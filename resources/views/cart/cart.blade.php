@@ -7,7 +7,7 @@
 
     <div class="container">
 
-        <h3>Votre commande : </h3>
+        <h3>Votre panier : </h3>
 
 
         {{ $cartItems }}
@@ -79,7 +79,15 @@
                         <td> {{  $totalAmountWithoutTax }} €</td>
                         <td>{{  $totalAmoutWithTax }} €</td>
 
-                        <td> <a href="" class="btn btn-primary">Payer votre commande</a></td>
+                        <td> 
+                            
+                            
+                            <a href="{{ route('order.payment', $order) }}" class="btn btn-primary">Payer votre commande</a>
+                        
+                        
+                        
+                        
+                        </td>
                     </tr>
 
 

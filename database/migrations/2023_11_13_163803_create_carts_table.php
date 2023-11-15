@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained();
             $table->integer('quantity')->default(1);
             $table->decimal('price', 8, 2)->default(0);
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->default(1)->constrained()->cascadeOnDelete();
         });
     }
 

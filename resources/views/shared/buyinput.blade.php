@@ -12,7 +12,7 @@
 
  
 
-        <button class="btn btn-success">Acheter</button>
+        <button class="btn btn-success">Ajouter au panier</button>
 
 
 

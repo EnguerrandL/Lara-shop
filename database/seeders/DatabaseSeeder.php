@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,10 +19,12 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+       User::factory()->create([
+            'id' => '1',
+            'name' => 'Compte client test',
+            'email' => 'test@example.com',
+
+        ]);
 
         Product::factory(20)->create();
         Order::factory(10)->create();

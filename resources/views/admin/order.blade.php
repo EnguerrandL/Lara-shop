@@ -3,15 +3,17 @@
 @section('title', 'Liste des commandes')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid col-10">
         <h2>Liste des commandes</h2>
         <table class="table table-dark table-hover">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">N°</th>
+                    <th scope="col">Nom client</th>
                     <th scope="col">Date</th>
                     <th scope="col">Produits commandés</th>
                     <th scope="col">Montant total</th>
+                    <th scope="col">Status paiement</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -19,6 +21,7 @@
                 @foreach ($orders as $order)
                     <tr>
                         <td>{{ $order->id }} </td>
+                        <td>{{ $order->user->name }} </td>
                         <td>{{ $order->order_date }}</td>
                         <td>
                             <ul>
@@ -36,6 +39,8 @@
                             </ul>
                         </td>
                         <td>{{ $order->getTotalAmount() . ' €' }}</td>
+                        <td>{{ $order->payment_status ? 'Payée' : 'En attente de paiement' }}</td>
+                   
 
                         <td style="width: 20%;">
                             <div class="d-flex">

@@ -24,7 +24,7 @@
           <a class="text-white py-2 d-none d-md-inline-block" href="{{ route('shop.index' )}}">Tous nos produits</a>
        
           <a class="text-white py-2 d-none d-md-inline-block" href="#">Enterprise</a>
-          <a class="btn btn-info py-2 d-none d-md-inline-block" href="{{ route('cart.show') }}">Voir le panier</a>
+          <a class="btn btn-info py-2 d-none d-md-inline-block" href="{{ route('cart.show', $user) }}">Voir le panier</a>
 
 
         </div>
