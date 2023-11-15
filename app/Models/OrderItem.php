@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class OrderItem extends Model
 {
     use HasFactory;
-    
+
+
+    protected $fillable = [
+        'user_id',
+        'order_id',
+        'product_id',
+        'quantity',
+        'unit_price',
+    ];
 
 
     public function order()
@@ -20,5 +28,4 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
-
 }

@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -16,16 +17,34 @@ class CartController extends Controller
 
     public function addToCart(Product $product, Request $request)
     {
-
+        $user = User::find(1);
 
         $productQuantity =  $request->input('quantity');
 
-        Cart::updateOrCreate([
+        Cart::firstOrCreate([
             'product_id' => $product->id,
             'price' => $product->price
         ], [
             'quantity' => $productQuantity,
         ]);
+
+       $order =  Order::create([
+            'user_id' => $user->id,
+            'order_date' => Carbon::now()
+        ]);
+
+
+        OrderItem::create([
+            'user_id' => $user->id,
+            'order_id' =>  $order->id,
+            'product_id' => $product->id,
+            'quantity' => $productQuantity,
+            'unit_price' => $product->price,
+        ]);
+
+
+
+    
 
         return back()->with(['message' => 'Produit ajouté avec succès', 'class' => 'success']);
     }

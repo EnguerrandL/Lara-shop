@@ -14,7 +14,7 @@ class OrderController extends Controller
     {
 
         return view('admin.order', [
-            'orders' => Order::with('orderItems.product')->get(),
+            'orders' => Order::with('orderItems.product')->orderBy('created_at', 'DESC')->get(),
             'user' => User::find(1)
 
         ]);
