@@ -54,5 +54,5 @@ Route::delete('cart/{prudct}', [CartController::class, 'deleteItem'])->name('ite
 //  Checkout & payment 
 
 
-Route::post('/cart/{order}', [StripeController::class, 'successPayment'])->name('order.payment');
+Route::post('/cart', [StripeController::class, 'checkout'])->name('order.payment');
 Route::get('/order/{order}', [StripeController::class, 'customerOrder'])->name('order.success');

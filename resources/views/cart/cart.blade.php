@@ -46,7 +46,7 @@
                             <th>{{ $cartItem->quantity }}</th>
                             <th>{{ $cartItem->product->price }} €</th>
                             <th>{{ $cartItem->priceByQuantity() }} €</th>
-                        </th>
+                            </th>
                             <th>€</th>
                             <td style="width: 30%;">
                                 <form method="POST" action=" {{ route('item.delete', $cartItem->id) }}">
@@ -76,17 +76,20 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td> {{  $totalAmountWithoutTax }} €</td>
-                        <td>{{  $totalAmoutWithTax }} €</td>
+                        <td> {{ $totalAmountWithoutTax }} €</td>
+                        <td>{{ $totalAmoutWithTax }} €</td>
 
-                        <td> 
-                            
-                            
-                            <a href="{{ route('order.payment', $order) }}" class="btn btn-primary">Payer votre commande</a>
-                        
-                        
-                        
-                        
+                        <td>
+
+
+                            <form action="{{ route('order.payment') }}" method="post">
+                                @csrf
+                                <button class="btn btn-primary">Payer votre commande</button>
+                            </form>
+
+
+
+
                         </td>
                     </tr>
 

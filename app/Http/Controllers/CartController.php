@@ -31,37 +31,28 @@ class CartController extends Controller
     }
 
 
-    public function cartShow(User $user, Cart $cart, Order $order)
+    public function cartShow(User $user, Cart $cart)
     {
-
-        $order = new Order(); 
-
-        dd($order);
 
         $user = User::find(1);
 
         $totalAmountWithoutTax = 0;
-      
 
         $cartItems = Cart::with('product')->get();
 
 
-
-       
-        foreach($cartItems as $cart){
-           $totalAmountWithoutTax += $cart->quantity * $cart->product->price;
+        foreach ($cartItems as $cart) {
+            $totalAmountWithoutTax += $cart->quantity * $cart->product->price;
         }
-      
+
         $totalAmoutWithTax = $totalAmountWithoutTax * 1.20;
 
-        
-    
+
         return view('cart.cart', [
             'cartItems' => $cartItems,
             'totalAmountWithoutTax' =>  $totalAmountWithoutTax,
             'totalAmoutWithTax' => $totalAmoutWithTax,
             'user' => $user,
-            'order' => $order
         ]);
     }
 
