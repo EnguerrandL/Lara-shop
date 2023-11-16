@@ -21,7 +21,7 @@ class StripeController extends Controller
 
 
 
-        if ($user->cart->product) {
+        if ($user->cart->products->isNotEmpty()) {
 
 
             $order =  Order::create([
@@ -31,7 +31,7 @@ class StripeController extends Controller
             ]);
 
 
-
+           
             $cartItems = Cart::where('user_id', $user->id)->get();
 
             foreach ($cartItems as $cartItem) {
@@ -44,18 +44,17 @@ class StripeController extends Controller
                     'quantity' => $cartItem->quantity,
                     'unit_price' => $cartItem->product->price,
                 ]);
-            }
 
+                $cartItem->update(['price' => $cartItem->product->price]);
 
+            }   
 
-
-
+             dd($cartItems);
 
             $orderItem->update(['order_id' => $order->id]);
-
-
+   
             $order->update(['total_amount' => $cartItems->sum('price')]);
-
+    
 
             return redirect()->route('order.success', ['order' => $order->id])->with(['message' => 'Paiement réussi', 'class' => 'success']);
         } else {
@@ -71,14 +70,16 @@ class StripeController extends Controller
 
         $user = User::find(1);
 
-        $order = Order::with('user.cart')
+        $latestOrder = Order::with('user.cart')
             ->where('user_id', $user->id)
-            ->latest('order_date') // Triez par date de commande en ordre décroissant
+            ->latest('order_date') 
             ->first();
+
+
 
         return view('order.success', [
             'user' => User::find(1),
-            'order' => $order
+            'latestOrder' => $latestOrder
         ]);
     }
 }

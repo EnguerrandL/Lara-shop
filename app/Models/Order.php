@@ -14,11 +14,11 @@ class Order extends Model
     protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $fillable = [
-        'user_id',
-        'total_amount',
-        'order_date'
+        'user_id', 
+        'order_date', 
+        'payment_status', 
+        'total_amount'
     ];
-
 
 
 

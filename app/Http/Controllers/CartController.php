@@ -30,7 +30,7 @@ class CartController extends Controller
         ]);
 
         $cart->save();
-
+        $user->cart->products()->attach($productId, ['quantity' => $productQuantity]);
 
         return back()->with(['message' => 'Produit ajouté avec succès', 'class' => 'success']);
     }
