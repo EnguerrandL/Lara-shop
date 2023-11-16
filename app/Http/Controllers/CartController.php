@@ -15,43 +15,43 @@ class CartController extends Controller
 {
 
 
-    public function addToCart(Product $product, Request $request)
+    public function addToCart(Request $request, $productId)
     {
         $user = User::find(1);
 
         $productQuantity =  $request->input('quantity');
+        $product = Product::find($productId);
 
-        Cart::firstOrCreate([
+        $cart = new Cart([
             'user_id' => $user->id,
             'product_id' => $product->id,
-            'price' => $product->price
-        ], [
             'quantity' => $productQuantity,
+            'price' => $product->price,
         ]);
 
-
-
-
+        $cart->save();
 
 
         return back()->with(['message' => 'Produit ajouté avec succès', 'class' => 'success']);
     }
 
 
-    public function cartShow(User $user, Cart $cart)
+    public function cartShow(User $user)
     {
 
         $user = User::find(1);
+        $cartItems = Cart::where('user_id', $user->id)->get();
+
+        
+
+
+
 
         $totalAmountWithoutTax = 0;
 
-        $cartItems = Cart::with('product')->get();
 
-
-
-
-        foreach ($cartItems as $cart) {
-            $totalAmountWithoutTax += $cart->quantity * $cart->product->price;
+        foreach ($cartItems as $cartItem) {
+            $totalAmountWithoutTax += $cartItem->quantity * $cartItem->product->price;
         }
 
         $totalAmoutWithTax = $totalAmountWithoutTax * 1.20;
@@ -61,7 +61,7 @@ class CartController extends Controller
             'cartItems' => $cartItems,
             'totalAmountWithoutTax' =>  $totalAmountWithoutTax,
             'totalAmoutWithTax' => $totalAmoutWithTax,
-            'user' => $user,
+       
         ]);
     }
 
@@ -72,7 +72,6 @@ class CartController extends Controller
 
         $cartItem = Cart::find($id);
         $cartItem->delete();
-
 
         return back()->with(['message' => 'Produit supprimé avec succès', 'class' => 'warning']);
     }

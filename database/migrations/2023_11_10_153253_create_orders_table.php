@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->default(1);
+            $table->foreignId('user_id')->default(1)->constrained();
             $table->timestamps();
             $table->boolean('payment_status')->default(0);
             $table->dateTime('order_date');

@@ -7,14 +7,11 @@
 
     <div class="container">
 
-        <h3>Votre panier : </h3>
-
-
-        {{ $cartItems }}
-
+      
 
 
         <div class="container mt-5">
+
 
 
 
@@ -49,7 +46,7 @@
                             </th>
                             <th>€</th>
                             <td style="width: 30%;">
-                                <form method="POST" action=" {{ route('item.delete', $cartItem->id) }}">
+                                <form method="POST" action=" {{ route('cart.remove', $cartItem->id) }}">
                                     @csrf
                                     @method('DELETE')
 

@@ -21,7 +21,7 @@ class OrderItemFactory extends Factory
             'order_id' => fake()->numberBetween(1, 10),
             'product_id' => fake()->numberBetween(1, 10),
             'quantity' => fake()->numberBetween(1, 10),
-            'unit_price' => fake()->randomFloat(2, 10, 100),
+            
         ];
     }
 }

@@ -14,29 +14,30 @@ class StripeController extends Controller
 {
 
 
-    public function checkout(Order $order, User $user, Product $product)
+    public function checkout(Order $order, Product $product)
     {
+
         $user = User::find(1);
-     
-      
 
-        if ($user->cart) {
 
-           
+
+        if ($user->cart->product) {
+
+
             $order =  Order::create([
                 'user_id' => $user->id,
                 'order_date' => Carbon::now(),
-                'payment_status' => true, 
+                'payment_status' => true,
             ]);
-            
-    
-   
-            $cartItems = Cart::with('product')->get();
+
+
+
+            $cartItems = Cart::where('user_id', $user->id)->get();
 
             foreach ($cartItems as $cartItem) {
 
-                
-                OrderItem::create([
+
+                $orderItem = OrderItem::create([
                     'user_id' => $user->id,
                     'order_id' => $order->id,
                     'product_id' => $cartItem->product->id,
@@ -44,22 +45,21 @@ class StripeController extends Controller
                     'unit_price' => $cartItem->product->price,
                 ]);
             }
-    
-    
-            $orderItems = OrderItem::where('user_id',  $user->id)->whereNull('order_id')->get();
 
-        
-            foreach ($orderItems as $orderItem) {
-                $orderItem->update(['order_id' => $order->id]);
-            }
-        
-          
-            $order->update(['total_amount' => $orderItems->sum('unit_price')]);
-        
-            
+
+
+
+
+
+            $orderItem->update(['order_id' => $order->id]);
+
+
+            $order->update(['total_amount' => $cartItems->sum('price')]);
+
+
             return redirect()->route('order.success', ['order' => $order->id])->with(['message' => 'Paiement réussi', 'class' => 'success']);
         } else {
-          
+
             return redirect()->route('cart.show', ['user' => $user->id])->with(['message' => 'Votre panier est vide', 'class' => 'danger']);
         }
     }
@@ -68,19 +68,17 @@ class StripeController extends Controller
 
     public function customerOrder(User $user)
     {
+
         $user = User::find(1);
 
-
-        
-         dd($user->cart);
-
-        
-
-
-
+        $order = Order::with('user.cart')
+            ->where('user_id', $user->id)
+            ->latest('order_date') // Triez par date de commande en ordre décroissant
+            ->first();
 
         return view('order.success', [
-            'user' => User::find(1)
+            'user' => User::find(1),
+            'order' => $order
         ]);
     }
 }
