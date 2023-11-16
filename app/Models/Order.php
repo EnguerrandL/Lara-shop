@@ -28,6 +28,11 @@ class Order extends Model
     }
 
 
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
 
 
     public function getOrderDateAttribute($value)
@@ -37,11 +42,6 @@ class Order extends Model
     }
 
 
-
-    public function orderItems()
-    {
-        return $this->hasMany(OrderItem::class);
-    }
 
 
 

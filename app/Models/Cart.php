@@ -29,10 +29,6 @@ class Cart extends Model
     }
 
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class);
-    }
 
 
     public function priceByQuantity()

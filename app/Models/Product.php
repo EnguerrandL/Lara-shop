@@ -31,6 +31,11 @@ class Product extends Model
 
 
 
+    public function carts()
+    {
+        return $this->belongsToMany(Cart::class);
+    }
+
     public function imgUrl(): string
     {
         if (Str::contains($this->image, 'placeholder')) {

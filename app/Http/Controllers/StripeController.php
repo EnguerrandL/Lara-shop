@@ -23,41 +23,32 @@ class StripeController extends Controller
         if ($user->cart) {
 
            
-
-
-       
             $order =  Order::create([
                 'user_id' => $user->id,
                 'order_date' => Carbon::now(),
                 'payment_status' => true, 
             ]);
+            
     
-    
-            OrderItem::create([
-                'user_id' => $user->id,
-                'order_id' =>  $order->id,
-                'product_id' => $user->cart->product->id,
-                'quantity' => $user->cart->quantity,
-                'unit_price' => $user->cart->product->price,
-            ]);
-    
-    
-            // OrderItem::create([
-            //     'user_id' => $user->id,
-            //     'order_id' =>  $order->id,
-            //     'product_id' => $product->id,
-            //     'quantity' => $user->cart->quantity,
-            //     'unit_price' => $product->price,
-            // ]);
-    
+   
+            $cartItems = Cart::with('product')->get();
 
+            foreach ($cartItems as $cartItem) {
 
-        
-            // Récupérez les éléments de commande en attente pour l'utilisateur actuel
+                
+                OrderItem::create([
+                    'user_id' => $user->id,
+                    'order_id' => $order->id,
+                    'product_id' => $cartItem->product->id,
+                    'quantity' => $cartItem->quantity,
+                    'unit_price' => $cartItem->product->price,
+                ]);
+            }
+    
+    
             $orderItems = OrderItem::where('user_id',  $user->id)->whereNull('order_id')->get();
 
         
-            // Associez les éléments de commande à la nouvelle commande
             foreach ($orderItems as $orderItem) {
                 $orderItem->update(['order_id' => $order->id]);
             }
@@ -75,10 +66,15 @@ class StripeController extends Controller
 
 
 
-    public function customerOrder()
+    public function customerOrder(User $user)
     {
+        $user = User::find(1);
 
 
+        
+         dd($user->cart);
+
+        
 
 
 

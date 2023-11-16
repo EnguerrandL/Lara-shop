@@ -32,7 +32,7 @@ class CartController extends Controller
 
 
 
-    
+
 
         return back()->with(['message' => 'Produit ajouté avec succès', 'class' => 'success']);
     }
@@ -46,6 +46,8 @@ class CartController extends Controller
         $totalAmountWithoutTax = 0;
 
         $cartItems = Cart::with('product')->get();
+
+
 
 
         foreach ($cartItems as $cart) {
