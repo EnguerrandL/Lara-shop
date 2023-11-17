@@ -12,7 +12,7 @@
                     <th scope="col">Nom client</th>
                     <th scope="col">Date</th>
                     <th scope="col">Produits commandés</th>
-                    <th scope="col">Montant total</th>
+                    <th scope="col">Montant total HT</th>
                     <th scope="col">Status paiement</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -30,7 +30,7 @@
                                         @if ($orderItem->product)
                                             ({{ $orderItem->quantity }})
                                             {{ $orderItem->product->name }}
-                                            || Prix unitaire : {{ $orderItem->unit_price }} €
+                                            || Prix unitaire : {{ $orderItem->price }} €
                                         @else
                                             Produit non trouvé
                                         @endif
@@ -38,7 +38,7 @@
                                 @endforeach
                             </ul>
                         </td>
-                        <td>{{ $order->getTotalAmount() . ' €' }}</td>
+                        <td>{{ $order->total_amount . ' €' }}</td>
                         <td>{{ $order->payment_status ? 'Payée' : 'En attente de paiement' }}</td>
                    
 

@@ -28,6 +28,7 @@ class StripeController extends Controller
                 'user_id' => $user->id,
                 'order_date' => Carbon::now(),
                 'payment_status' => true,
+               
             ]);
 
 
@@ -42,19 +43,24 @@ class StripeController extends Controller
                     'order_id' => $order->id,
                     'product_id' => $cartItem->product->id,
                     'quantity' => $cartItem->quantity,
-                    'unit_price' => $cartItem->product->price,
+                    'price' => $cartItem->product->price,
                 ]);
 
-                $cartItem->update(['price' => $cartItem->product->price]);
+               
+                
+               
+
 
             }   
 
-             dd($cartItems);
-
+       
+           
             $orderItem->update(['order_id' => $order->id]);
    
-            $order->update(['total_amount' => $cartItems->sum('price')]);
-    
+            $order->update(['total_amount' => $cartItems->sum(function ($item) {
+                return $item->quantity * $item->product->price;
+            })]);
+           
 
             return redirect()->route('order.success', ['order' => $order->id])->with(['message' => 'Paiement réussi', 'class' => 'success']);
         } else {
