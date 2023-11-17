@@ -10,7 +10,7 @@ class OrderItem extends Model
     use HasFactory;
 
 
-    protected $fillable = ['order_id', 'product_id', 'price', 'quantity'];
+    protected $fillable = ['user_id', 'order_id', 'product_id', 'price', 'quantity', 'product_name', 'image'];
 
 
   
@@ -24,4 +24,20 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+   
+    public function priceByQuantity()
+    {
+        return $this->product->price * $this->quantity;
+    }
+
+
+    public function priceWithTax()
+    {
+        $getValue = $this->priceByQuantity() * 1.20;
+
+        return  number_format($getValue, 2, ',', ' ');
+    }
+
+
 }

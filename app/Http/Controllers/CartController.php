@@ -61,6 +61,8 @@ class CartController extends Controller
             'cartItems' => $cartItems,
             'totalAmountWithoutTax' =>  $totalAmountWithoutTax,
             'totalAmoutWithTax' => $totalAmoutWithTax,
+            'user' => $user,
+  
        
         ]);
     }

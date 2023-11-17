@@ -32,8 +32,8 @@
                             <th scope="col">Nom du produit</th>
                             <th scope="col">Quantité</th>
                             <th scope="col">Prix unitaire</th>
-                            <th scope="col">Prix total </th>
-                            <th scope="col">TVA</th>
+                            <th scope="col">Prix  HT</th>
+                            <th scope="col">Prix TTC</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -46,7 +46,7 @@
                                 <th>{{ $cartItem->product->price }} €</th>
                                 <th>{{ $cartItem->priceByQuantity() }} €</th>
                                 </th>
-                                <th>€</th>
+                                <th>{{ $cartItem->priceWithTax()}} €</th>
                                 <td style="width: 30%;">
                                     <form method="POST" action=" {{ route('cart.remove', $cartItem->id) }}">
                                         @csrf
@@ -68,7 +68,7 @@
                         <tr>
                             <th scope="col">Prix HT </th>
                             <th scope="col">Prix TTC</th>
-                            <th scope="col"> <a href="" class="btn btn-warning">téléharger le pdf</a></th>
+                            
 
 
                         </tr>

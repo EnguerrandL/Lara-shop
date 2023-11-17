@@ -33,9 +33,6 @@ class Cart extends Model
     {
         return $this->belongsToMany(Product::class)->withPivot('quantity');
     }
- 
- 
-
 
 
 
@@ -44,4 +41,11 @@ class Cart extends Model
         return $this->product->price * $this->quantity;
     }
 
+
+    public function priceWithTax()
+    {
+        $getValue = $this->priceByQuantity() * 1.20;
+
+        return  number_format($getValue, 2, ',', ' ');
+    }
 }

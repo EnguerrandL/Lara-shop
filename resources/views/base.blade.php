@@ -36,12 +36,21 @@
 
             <a class="text-white py-2 d-none d-md-inline-block" href="#">Enterprise</a>
 
-           @php
-               $user = 1
-           @endphp
-                <a class="btn btn-info py-2 d-none d-md-inline-block" href="{{ route('cart.show', $user) }}">Voir le
-                    panier</a>
-         
+            @php
+                if (!$user->exists) {
+                    $user = 1;
+                }
+            @endphp
+
+
+            <a class="btn btn-info py-2 d-none d-md-inline-block" href="{{ route('cart.show', $user) }}">Voir le
+                panier
+               <span class="badge bg-success">{{ $user->cart ? count($user->cart->products) : '' }}</span>
+            </a>
+
+
+
+
 
         </div>
     </nav <div class="container-fluid">

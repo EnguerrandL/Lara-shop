@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequestForm;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -21,7 +22,8 @@ class ProductController extends Controller
 
 
         return view('admin.index', [
-            'products' => Product::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->get()
+            'products' => Product::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->get(),
+            'user' => User::find(1)
         ]);
     }
 
@@ -32,6 +34,7 @@ class ProductController extends Controller
     {
         return view('admin.create', [
             'product' => $product,
+            'user' => User::find(1)
         ]);
     }
 
@@ -75,6 +78,7 @@ class ProductController extends Controller
 
         return view('admin.edit', [
             'product' => $product,
+            'user' => User::find(1)
         ]);
     }
 

@@ -57,5 +57,12 @@ class User extends Authenticatable
     }
 
 
+    public function orderItems()
+
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
+
 
 }

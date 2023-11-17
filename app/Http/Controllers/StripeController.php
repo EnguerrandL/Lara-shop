@@ -28,12 +28,13 @@ class StripeController extends Controller
                 'user_id' => $user->id,
                 'order_date' => Carbon::now(),
                 'payment_status' => true,
-               
+
             ]);
 
 
-           
+
             $cartItems = Cart::where('user_id', $user->id)->get();
+
 
             foreach ($cartItems as $cartItem) {
 
@@ -44,23 +45,28 @@ class StripeController extends Controller
                     'product_id' => $cartItem->product->id,
                     'quantity' => $cartItem->quantity,
                     'price' => $cartItem->product->price,
+                    'product_name' => $cartItem->product->name,
+                    'image' => $cartItem->product->image,
                 ]);
-
-               
-                
-               
+            }
 
 
-            }   
+    
 
-       
-           
+
+
             $orderItem->update(['order_id' => $order->id]);
-   
+
             $order->update(['total_amount' => $cartItems->sum(function ($item) {
                 return $item->quantity * $item->product->price;
             })]);
-           
+
+
+
+
+
+
+            $user->cart->delete();
 
             return redirect()->route('order.success', ['order' => $order->id])->with(['message' => 'Paiement réussi', 'class' => 'success']);
         } else {
@@ -71,21 +77,26 @@ class StripeController extends Controller
 
 
 
-    public function customerOrder(User $user)
+    public function customerOrder()
     {
 
         $user = User::find(1);
 
-        $latestOrder = Order::with('user.cart')
-            ->where('user_id', $user->id)
-            ->latest('order_date') 
+        $orderData = Order::where('user_id', $user->id)
+            ->latest('order_date')
             ->first();
 
+            $order = Order::where('user_id', $user->id)
+            ->latest('order_date')
+            ->first();
 
-
+        
+         
         return view('order.success', [
             'user' => User::find(1),
-            'latestOrder' => $latestOrder
+            'orderData' =>  $orderData,
+            'order' => $order
+
         ]);
     }
 }
