@@ -34,7 +34,7 @@
                         <td> <img width="250px" src="{{$product->imgUrl() }}" alt=""></td>
                         <td>{{ $product->name }} </td>
                         <th>{{ $product->price }}</th>
-                        <th>{{ $product->quantity }}</th>
+                        <th class="{{ $product->quantity <= 2 ? 'text-danger' : 'text-success' }}">{{ $product->quantity }}</th>
                         <td style="width: 30%;">
                             <div class="d-flex">
                                 <div class="container">

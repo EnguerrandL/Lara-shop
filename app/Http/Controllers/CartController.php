@@ -22,6 +22,9 @@ class CartController extends Controller
         $productQuantity =  $request->input('quantity');
         $product = Product::find($productId);
 
+        $cartItems = Cart::where('user_id', $user->id)->with('products')->get();
+
+
         $cart = new Cart([
             'user_id' => $user->id,
             'product_id' => $product->id,
@@ -29,7 +32,16 @@ class CartController extends Controller
             'price' => $product->price,
         ]);
 
+
+        // Prevent buyin multiple time same product 
+        foreach($cartItems as $cartItem){
+            if ($cartItem->product_id == $cart->product_id){
+             return back()->with(['message' => 'Ce produit est déjà dans votre panier', 'class' => 'danger']);
+            }
+         }
+ 
         $cart->save();
+      
         $user->cart->products()->attach($productId, ['quantity' => $productQuantity]);
 
         return back()->with(['message' => 'Produit ajouté avec succès', 'class' => 'success']);
@@ -41,10 +53,6 @@ class CartController extends Controller
 
         $user = User::find(1);
         $cartItems = Cart::where('user_id', $user->id)->get();
-
-        
-
-
 
 
         $totalAmountWithoutTax = 0;

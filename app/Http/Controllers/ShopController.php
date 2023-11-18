@@ -44,6 +44,7 @@ class ShopController extends Controller
         return view('shop.product', [
             'slug' => $checkSlug,
             'product' => $product,
+            'user' => User::find(1),
          
         ]);
     }
