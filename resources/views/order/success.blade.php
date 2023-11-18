@@ -80,15 +80,16 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td> {{ $order->total_amount }} €</td>
-                            <td>{{  $order->total_amount * 1.20 }} €</td>
+                            <td> {{ number_format($order->total_amount, 2, ',', ' ') }} €</td>
+                            <td>{{ number_format($order->total_amount * 1.20, 2, ',', ' ') }} €</td>
 
                             <td>
 
 
-                          <a href="" class="btn btn-info">Télécharger la facture</a>
+                         
 
-
+                          <a href="{{ route('make.invoice', $order) }}" class="btn btn-info">Voir la
+                            facture</a>
 
                             </td>
                         </tr>

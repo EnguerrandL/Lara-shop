@@ -40,12 +40,15 @@
                         </td>
                         <td>{{ $order->total_amount . ' €' }}</td>
                         <td>{{ $order->payment_status ? 'Payée' : 'En attente de paiement' }}</td>
-                   
+
 
                         <td style="width: 20%;">
                             <div class="d-flex">
                                 <div>
-                                    <button class="btn btn-success">Voir la facture</button>
+
+                                    <a href="{{ route('make.invoice', $order) }}" class="btn btn-success">Voir la
+                                        facture</a>
+
                                 </div>
                                 <div>
                                     <form action="{{ route('order.delete', $order) }}" method="post">

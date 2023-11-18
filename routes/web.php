@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\InvoicePdfController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
@@ -56,3 +57,9 @@ Route::delete('cart/{prudct}', [CartController::class, 'deleteItem'])->name('car
 
 Route::post('/cart', [StripeController::class, 'checkout'])->name('order.payment');
 Route::get('/order/{order}', [StripeController::class, 'customerOrder'])->name('order.success');
+
+
+// Invoice 
+
+
+Route::get('/invoice/{order}',[InvoicePdfController::class, 'makeInvoicePdf'])->name('make.invoice');

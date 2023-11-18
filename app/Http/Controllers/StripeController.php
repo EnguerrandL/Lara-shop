@@ -11,19 +11,17 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
+
 class StripeController extends Controller
 {
 
 
     public function checkout(Order $order, Product $product)
     {
-
+     
         $user = User::find(1);
 
-
-
         if ($user->cart->products->isNotEmpty()) {
-
 
             $order =  Order::create([
                 'user_id' => $user->id,
@@ -33,12 +31,9 @@ class StripeController extends Controller
             ]);
 
 
-
             $cartItems = Cart::where('user_id', $user->id)->get();
 
-
             foreach ($cartItems as $cartItem) {
-
 
                 $orderItem = OrderItem::create([
                     'user_id' => $user->id,
@@ -56,7 +51,6 @@ class StripeController extends Controller
             }
 
 
-    
             event(new UpdateProductQuantityEvent($order->id, $orderItems ));
 
 
@@ -65,13 +59,6 @@ class StripeController extends Controller
             $order->update(['total_amount' => $cartItems->sum(function ($item) {
                 return $item->quantity * $item->product->price;
             })]);
-
-
-
-
-
-           
-
 
             $user->cart->delete();
 
@@ -97,7 +84,6 @@ class StripeController extends Controller
             ->latest('order_date')
             ->first();
 
-        
          
         return view('order.success', [
             'user' => User::find(1),
