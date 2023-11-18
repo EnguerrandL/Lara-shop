@@ -54,12 +54,10 @@ Route::delete('cart/{prudct}', [CartController::class, 'deleteItem'])->name('car
 
 //  Checkout & payment 
 
-
 Route::post('/cart', [StripeController::class, 'checkout'])->name('order.payment');
 Route::get('/order/{order}', [StripeController::class, 'customerOrder'])->name('order.success');
 
 
 // Invoice 
-
 
 Route::get('/invoice/{order}',[InvoicePdfController::class, 'makeInvoicePdf'])->name('make.invoice');

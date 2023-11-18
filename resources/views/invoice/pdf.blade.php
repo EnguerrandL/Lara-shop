@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Facture</title>
-    <!-- Ajoutez le lien vers le style Bootstrap si vous l'utilisez -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
@@ -40,7 +40,7 @@
             <hr>
             <p>Total HT: {{ number_format($order->total_amount, 2, ',', ' ') }} €</p>
             <p>Total TTC: {{ number_format($order->total_amount *1.20, 2, ',', ' ') }} €</p>
-            <!-- Ajoutez d'autres informations de facturation si nécessaire -->
+           
         </div>
     </div>
 </div>

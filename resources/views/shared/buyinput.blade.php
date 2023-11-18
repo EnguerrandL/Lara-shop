@@ -12,10 +12,8 @@
     @endforeach
     </select>
     <button class="btn btn-success">Ajouter au panier</button>
-
-
 @else
-<p class="alert alert-warning">Ce produit n'est plus en stock</p>
+    <p class="alert alert-warning">Ce produit n'est plus en stock</p>
 
-@endif
+    @endif
 </form>
