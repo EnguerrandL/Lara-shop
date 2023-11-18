@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UpdateProductQuantityEvent;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -48,11 +49,15 @@ class StripeController extends Controller
                     'product_name' => $cartItem->product->name,
                     'image' => $cartItem->product->image,
                 ]);
+
+                $orderItems[] = $orderItem;
+
+                
             }
 
 
     
-
+            event(new UpdateProductQuantityEvent($order->id, $orderItems ));
 
 
             $orderItem->update(['order_id' => $order->id]);
@@ -64,6 +69,8 @@ class StripeController extends Controller
 
 
 
+
+           
 
 
             $user->cart->delete();
