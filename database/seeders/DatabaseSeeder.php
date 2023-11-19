@@ -9,6 +9,7 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,7 +23,9 @@ class DatabaseSeeder extends Seeder
        User::factory()->create([
             'id' => '1',
             'name' => 'Compte client test',
-            'email' => 'test@example.com',
+            'email' => 'admin@admin.fr',
+            'password' => Hash::make('0000'),
+            'isAdmin' => 1,
 
         ]);
 

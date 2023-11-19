@@ -12,7 +12,9 @@ class Order extends Model
 
 
     protected $dateFormat = 'Y-m-d H:i:s';
+    protected $dates = ['order_date'];
 
+    
     protected $fillable = [
         'user_id', 
         'order_date', 
@@ -21,7 +23,7 @@ class Order extends Model
     ];
 
 
-
+   
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -42,7 +44,7 @@ class Order extends Model
     }
 
 
-
+   
 
 
     public function getTotalAmount()

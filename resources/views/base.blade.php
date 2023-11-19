@@ -29,26 +29,16 @@
                     <line x1="16.62" y1="12" x2="10.88" y2="21.94"></line>
                 </svg>
             </a>
-            <a class="text-white py-2 d-none d-md-inline-block" href="{{ route('products.index') }}">Admin</a>
-            <a class="text-white py-2 d-none d-md-inline-block" href="{{ route('order.index') }}">Gérer les
-                commandes</a>
+
+            @if (Auth::user() && Auth::user()->isAdmin)
+                <a class="text-white py-2 d-none d-md-inline-block" href="{{ route('products.index') }}">Admin</a>
+                <a class="text-white py-2 d-none d-md-inline-block" href="{{ route('order.index') }}">Gérer les
+                    commandes</a>
+            @endif
             <a class="text-white py-2 d-none d-md-inline-block" href="{{ route('shop.index') }}">Tous nos produits</a>
 
-            <a class="text-white py-2 d-none d-md-inline-block" href="#">Enterprise</a>
 
-            @php
-                if (!$user->exists) {
-                    $user = 1;
-                }
-            @endphp
-
-
-            <a class="btn btn-info py-2 d-none d-md-inline-block" href="{{ route('cart.show', $user) }}">Voir le
-                panier
-               <span class="badge bg-success">{{ $user->cart ? count($user->cart->products) : '' }}</span>
-            </a>
-
-
+            @include('shared.userlogin')
 
 
 

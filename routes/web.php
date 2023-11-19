@@ -1,12 +1,16 @@
 <?php
 
+
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\InvoicePdfController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +23,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
 
 
 
@@ -31,9 +47,16 @@ $idRegex = '[0-9]+';
 
 // Admin panel
 
-Route::resource('admin/products', ProductController::class);
-Route::get('admin/orders', [OrderController::class, 'index'])->name('order.index');
-Route::delete('admin/orders/{order}', [OrderController::class, 'deleteOrder'])->name('order.delete');
+
+Route::middleware('auth', 'is.admin')->group(function () {
+    Route::resource('admin/products', ProductController::class);
+    Route::get('admin/orders', [OrderController::class, 'index'])->name('order.index');
+    Route::delete('admin/orders/{order}', [OrderController::class, 'deleteOrder'])->name('order.delete');
+});
+
+// Dashboard
+
+Route::get('/dashboard', [DashboardController::class, 'show'])->middleware('auth')->name('dashboard');
 
 //Shop 
 
@@ -60,4 +83,6 @@ Route::get('/order/{order}', [StripeController::class, 'customerOrder'])->name('
 
 // Invoice 
 
-Route::get('/invoice/{order}',[InvoicePdfController::class, 'makeInvoicePdf'])->name('make.invoice');
+Route::get('/invoice/{order}', [InvoicePdfController::class, 'makeInvoicePdf'])->name('make.invoice');
+
+require __DIR__ . '/auth.php';
