@@ -53,8 +53,11 @@ class ProductOutOfStock extends Notification
     {
         return [
            
-            'sdsqd' => 'sqdqsd',
+            'product_out_of_stock_date' => Carbon::now(),
+            'product_name' => $this->product->name
            
         ];
     }
+
+
 }

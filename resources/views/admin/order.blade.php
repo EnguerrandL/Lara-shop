@@ -5,6 +5,11 @@
 @section('content')
     <div class="container-fluid col-10">
         <h2>Liste des commandes</h2>
+
+
+
+      
+
         <table class="table table-dark table-hover">
             <thead>
                 <tr>

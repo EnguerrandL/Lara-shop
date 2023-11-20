@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+
 class ProductController extends Controller
 {
     /**
@@ -18,17 +19,29 @@ class ProductController extends Controller
     public function index()
     {
 
-        $user = Auth::user(); 
+        $user = Auth::user();
 
-        if($user->isAdmin){
 
-           dd($user->notifications);
+        // Diplay alert if product out of stock 
+        if ($user->isAdmin) {
+            $productStockNotification = [];
+
+            foreach ($user->unreadNotifications   as $notification) {
+
+                $productStockNotification[] = $notification->data;
+            }
+
+            $user->unreadNotifications->markAsRead();
+            $user->notifications()->delete();
         }
+
 
 
 
         return view('admin.index', [
             'products' => Product::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->get(),
+            'productStockNotification' => $productStockNotification
+
 
         ]);
     }

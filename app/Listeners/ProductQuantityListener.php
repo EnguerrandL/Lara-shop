@@ -7,6 +7,7 @@ use App\Notifications\ProductOutOfStock;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Broadcasting\Channel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 
 class ProductQuantityListener
@@ -25,10 +26,9 @@ class ProductQuantityListener
     public function handle(UpdateProductQuantityEvent $event): void
     {
 
-
+        $user = Auth::user();
         //    Order détails 
         $orderItems = $event->orderItems;
-
 
         foreach ($orderItems as $orderItem) {
             // Quantity update on products
@@ -39,24 +39,9 @@ class ProductQuantityListener
             // Send notification if product out of stock 
             if ($orderItem->product->quantity <= 0) {
 
-             
-               
-                Notification::route('mail', 'admin@netshop.fr')
-       
-                ->notify(new ProductOutOfStock($orderItem->product));
 
-                
-
-              
+                    $user->notify(new ProductOutOfStock($orderItem->product));
             }
         }
-
-
-
-
-     
-           
-        }
-
     }
-
+}
