@@ -13,7 +13,7 @@ class DashboardController extends Controller
     public function show()
 {
     $user = Auth::user();
-    $orders = Order::where('user_id', $user->id)->orderBy('order_date', 'DESC')->get();
+    $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get();
 
     return view('dashboard', [
         'user' => $user,

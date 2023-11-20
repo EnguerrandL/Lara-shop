@@ -7,21 +7,21 @@ use App\Mail\OrderShipped;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
-use App\Models\Product;
-use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class StripeController extends Controller
 {
 
 
-    public function checkout(Order $order, Product $product)
+    public function checkout(Order $order)
     {
-     
-        $user = User::find(1);
 
+        $user = Auth::user();
+
+
+        
         if ($user->cart->products->isNotEmpty()) {
 
             $order =  Order::create([
@@ -33,6 +33,8 @@ class StripeController extends Controller
 
 
             $cartItems = Cart::where('user_id', $user->id)->get();
+            $orderItems = [];
+
 
             foreach ($cartItems as $cartItem) {
 
@@ -47,12 +49,10 @@ class StripeController extends Controller
                 ]);
 
                 $orderItems[] = $orderItem;
-
-                
             }
 
 
-            event(new UpdateProductQuantityEvent($order->id, $orderItems ));
+            event(new UpdateProductQuantityEvent($order->id, $orderItems));
 
 
             $orderItem->update(['order_id' => $order->id]);
@@ -77,20 +77,21 @@ class StripeController extends Controller
 
     public function customerOrder()
     {
+        $user = Auth::user();
 
-        $user = User::find(1);
+
 
         $orderData = Order::where('user_id', $user->id)
             ->latest('order_date')
             ->first();
 
-            $order = Order::where('user_id', $user->id)
+        $order = Order::where('user_id', $user->id)
             ->latest('order_date')
             ->first();
 
-         
+
         return view('order.success', [
-            'user' => User::find(1),
+            'user' => $user,
             'orderData' =>  $orderData,
             'order' => $order
 
