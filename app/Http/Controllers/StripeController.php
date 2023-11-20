@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\UpdateProductQuantityEvent;
+use App\Mail\OrderShipped;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -10,7 +11,7 @@ use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Mail;
 
 class StripeController extends Controller
 {
@@ -61,6 +62,9 @@ class StripeController extends Controller
             })]);
 
             $user->cart->delete();
+
+
+            Mail::send(new OrderShipped($order, $user));
 
             return redirect()->route('order.success', ['order' => $order->id])->with(['message' => 'Paiement réussi', 'class' => 'success']);
         } else {
