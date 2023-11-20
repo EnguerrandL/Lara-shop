@@ -3,8 +3,9 @@
 namespace App\Events;
 
 use App\Models\Product;
-
+use App\Notifications\ProductOutOfStock;
 use Illuminate\Foundation\Events\Dispatchable;
+
 use Illuminate\Queue\SerializesModels;
 
 class UpdateProductQuantityEvent
@@ -18,6 +19,11 @@ class UpdateProductQuantityEvent
     {
         $this->order = $order;
         $this->orderItems = $orderItems;
+
+
+
+
+
     }
 
 

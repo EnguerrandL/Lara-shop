@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+
+
+
 class Product extends Model
 {
     use HasFactory;
@@ -21,6 +24,8 @@ class Product extends Model
         'description'
     ];
 
+
+    
 
 
 

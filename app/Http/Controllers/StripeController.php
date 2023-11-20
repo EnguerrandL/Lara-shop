@@ -11,6 +11,8 @@ use App\Models\Product;
 use App\Models\User;
 use App\Notifications\ProductOutOfStock;
 use Carbon\Carbon;
+use Illuminate\Broadcasting\Channel;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -18,7 +20,7 @@ class StripeController extends Controller
 {
 
 
-    public function checkout(Order $order)
+    public function checkout(Order $order, Product $product)
     {
 
         $user = Auth::user();
@@ -52,15 +54,6 @@ class StripeController extends Controller
                 ]);
 
 
-                $product = Product::find($cartItem->product->id);
-
-                if ($product) {
-                    $admins = User::where('isAdmin', true)->get();
-
-                    foreach ($admins as $admin) {
-                        $admin->notify(new ProductOutOfStock($product));
-                    }
-                }
 
 
                 $orderItems[] = $orderItem;

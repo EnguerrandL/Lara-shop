@@ -21,7 +21,6 @@ class ShopController extends Controller
             'products' =>  Product::orderBy('updated_at', 'DESC')
             ->orderBy('created_at', 'DESC')
             ->get(),
-            'user' => User::find(1),
           
         
         ]);
@@ -44,7 +43,6 @@ class ShopController extends Controller
         return view('shop.product', [
             'slug' => $checkSlug,
             'product' => $product,
-            'user' => User::find(1),
          
         ]);
     }
