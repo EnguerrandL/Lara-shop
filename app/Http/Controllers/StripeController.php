@@ -7,6 +7,9 @@ use App\Mail\OrderShipped;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
+use App\Models\User;
+use App\Notifications\ProductOutOfStock;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -21,7 +24,7 @@ class StripeController extends Controller
         $user = Auth::user();
 
 
-        
+
         if ($user->cart->products->isNotEmpty()) {
 
             $order =  Order::create([
@@ -48,6 +51,18 @@ class StripeController extends Controller
                     'image' => $cartItem->product->image,
                 ]);
 
+
+                $product = Product::find($cartItem->product->id);
+
+                if ($product) {
+                    $admins = User::where('isAdmin', true)->get();
+
+                    foreach ($admins as $admin) {
+                        $admin->notify(new ProductOutOfStock($product));
+                    }
+                }
+
+
                 $orderItems[] = $orderItem;
             }
 
@@ -62,6 +77,10 @@ class StripeController extends Controller
             })]);
 
             $user->cart->delete();
+
+
+
+
 
 
             Mail::send(new OrderShipped($order, $user));
