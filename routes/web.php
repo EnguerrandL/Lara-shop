@@ -57,6 +57,8 @@ Route::middleware('auth', 'is.admin')->group(function () {
 // Dashboard
 
 Route::get('/dashboard', [DashboardController::class, 'show'])->middleware('auth')->name('dashboard');
+Route::get('/dashboard/order/{order}', [DashboardController::class, 'orderDetail'])
+->middleware('auth')->name('dashboard.order');
 
 //Shop 
 

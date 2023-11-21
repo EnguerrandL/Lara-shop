@@ -43,13 +43,15 @@
                             <td>
 
                                 <a href="{{ route('make.invoice', $order) }}" target="_blank" class="btn btn-warning">Voir la facture</a>
-                                <a href="" class="btn btn-primary">Détails de ma commande </a>
+                                <a href="{{ route('dashboard.order', $order) }}" class="btn btn-primary">Détails de ma commande </a>
 
 
                             </td>
                         </tr>
                     
                             @endforeach
+
+                            
                           
                        
                           

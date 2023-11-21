@@ -11,13 +11,26 @@ use Illuminate\Support\Facades\Log;
 class DashboardController extends Controller
 {
     public function show()
-{
-    $user = Auth::user();
-    $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get();
+    {
+        $user = Auth::user();
+        $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'DESC')->get();
 
-    return view('dashboard', [
-        'user' => $user,
-        'orders' => $orders,
-    ]);
-}
+        return view('dashboard.dashboard', [
+            'user' => $user,
+            'orders' => $orders,
+        ]);
+    }
+
+    public function orderDetail(Order $order)
+    {
+
+        $user = Auth::user();
+       
+
+        return view('dashboard.orderdetail', [
+            'order' => $order,
+            'user' => $user,
+
+        ]);
+    }
 }
