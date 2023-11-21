@@ -78,23 +78,13 @@
                             <td> {{ $totalAmountWithoutTax }} €</td>
                             <td>{{ $totalAmoutWithTax }} €</td>
 
-                            <td>
-
-
-                                <form action="{{ route('order.payment') }}" method="post">
-                                    @csrf
-                                    <button class="btn btn-primary">Payer votre commande</button>
-                                </form>
-
-
-
-
-                            </td>
+                            
                         </tr>
 
-
+                      
                     </tbody>
                 </table>
+                <a class="btn btn-primary"" href="{{ route('checkout') }}">Payer votre commande</a>
             @else
                 <h3 class="alert alert-danger">Votre panier est vide</h3>
 

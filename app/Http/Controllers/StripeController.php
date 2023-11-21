@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Notifications\ProductOutOfStock;
 use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -20,8 +21,9 @@ class StripeController extends Controller
 {
 
 
-    public function checkout(Order $order, Product $product)
+    public function checkout()
     {
+
 
         $user = Auth::user();
 
@@ -32,7 +34,7 @@ class StripeController extends Controller
             $order =  Order::create([
                 'user_id' => $user->id,
                 'order_date' => Carbon::now(),
-                'payment_status' => true,
+                // 'payment_status' => true,
 
             ]);
 
@@ -59,31 +61,67 @@ class StripeController extends Controller
                 $orderItems[] = $orderItem;
             }
 
-
-            event(new UpdateProductQuantityEvent($order->id, $orderItems));
-
-
+            
             $orderItem->update(['order_id' => $order->id]);
 
             $order->update(['total_amount' => $cartItems->sum(function ($item) {
                 return $item->quantity * $item->product->price;
             })]);
 
+
+        }
+
+
+
+
+    
+        return view('order.payment',[
+            'order' => $order
+        ]);
+ 
+    }
+
+    public function processPayment(Order $order, Request $request){
+             $user = Auth::user();
+
+
+            $order = $user->orders()->latest('created_at')->first();
+
+
+             $totalAmount = $order->total_amount * 100; // Convertir en centimes
+             $totalAmount = intval($totalAmount);
+
+         
+             $user->charge($totalAmount, $request->payment_method );
+
+          
+        // if ($user->cart->products->isNotEmpty()) {
+
+           
+
+
+         
+
+            $order->update(['payment_status' => true]);
+
+            $orderItems = $order->orderItems;
+
+          
+
+            event(new UpdateProductQuantityEvent($order->id, $orderItems));
+        
             $user->cart->delete();
-
-
-
-
-
 
             Mail::send(new OrderShipped($order, $user));
 
             return redirect()->route('order.success', ['order' => $order->id])->with(['message' => 'Paiement réussi', 'class' => 'success']);
-        } else {
+        // } else {
 
-            return redirect()->route('cart.show', ['user' => $user->id])->with(['message' => 'Votre panier est vide', 'class' => 'danger']);
+        //     return redirect()->route('cart.show', ['user' => $user->id])->with(['message' => 'Votre panier est vide', 'class' => 'danger']);
         }
-    }
+
+
+    
 
 
 

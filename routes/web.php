@@ -79,8 +79,11 @@ Route::delete('cart/{prudct}', [CartController::class, 'deleteItem'])->name('car
 
 //  Checkout & payment 
 
-Route::post('/cart', [StripeController::class, 'checkout'])->name('order.payment');
-Route::get('/order/{order}', [StripeController::class, 'customerOrder'])->name('order.success');
+// Route::post('/cart', [StripeController::class, 'checkout'])->name('order.payment');
+
+Route::get('/checkout', [StripeController::class, 'checkout'])->name('checkout');
+Route::post('/checkout/process', [StripeController::class, 'processPayment'])->name('payment.process');
+Route::get('/checkout/{order}', [StripeController::class, 'customerOrder'])->name('order.success');
 
 
 // Invoice 
