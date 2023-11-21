@@ -36,8 +36,6 @@ class ProductController extends Controller
         }
 
 
-
-
         return view('admin.index', [
             'products' => Product::orderBy('updated_at', 'DESC')->orderBy('created_at', 'DESC')->get(),
             'productStockNotification' => $productStockNotification
@@ -78,8 +76,6 @@ class ProductController extends Controller
         }
 
 
-
-
         $validatedData['slug'] = Str::slug($request->name);
         $product = Product::create($validatedData);
 
@@ -92,8 +88,6 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-
-
 
         return view('admin.edit', [
             'product' => $product,
@@ -120,9 +114,6 @@ class ProductController extends Controller
 
             Storage::disk('public')->delete($product->image);
         }
-
-
-
 
 
         $product->update($validatedData);

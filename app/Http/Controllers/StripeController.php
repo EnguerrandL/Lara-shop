@@ -24,10 +24,7 @@ class StripeController extends Controller
     public function checkout()
     {
 
-
         $user = Auth::user();
-
-
 
         if ($user->cart->products->isNotEmpty()) {
 
@@ -55,9 +52,6 @@ class StripeController extends Controller
                     'image' => $cartItem->product->image,
                 ]);
 
-
-
-
                 $orderItems[] = $orderItem;
             }
 
@@ -65,16 +59,13 @@ class StripeController extends Controller
             $orderItem->update(['order_id' => $order->id]);
 
             $order->update(['total_amount' => $cartItems->sum(function ($item) {
-                return $item->quantity * $item->product->price;
+
+                    $totalAmount = $item->quantity * $item->product->price;
+
+                return $totalAmount *1.20;
             })]);
-
-
         }
-
-
-
-
-    
+   
         return view('order.payment',[
             'order' => $order
         ]);
@@ -87,26 +78,18 @@ class StripeController extends Controller
 
             $order = $user->orders()->latest('created_at')->first();
 
-
-             $totalAmount = $order->total_amount * 100; // Convertir en centimes
+            $totalAmount = $order->total_amount *1.20;
+             $totalAmount = $totalAmount * 100; // Convertir en centimes
              $totalAmount = intval($totalAmount);
 
          
              $user->charge($totalAmount, $request->payment_method );
 
-          
-        // if ($user->cart->products->isNotEmpty()) {
-
-           
-
-
-         
 
             $order->update(['payment_status' => true]);
 
             $orderItems = $order->orderItems;
-
-          
+ 
 
             event(new UpdateProductQuantityEvent($order->id, $orderItems));
         
@@ -115,9 +98,6 @@ class StripeController extends Controller
             Mail::send(new OrderShipped($order, $user));
 
             return redirect()->route('order.success', ['order' => $order->id])->with(['message' => 'Paiement réussi', 'class' => 'success']);
-        // } else {
-
-        //     return redirect()->route('cart.show', ['user' => $user->id])->with(['message' => 'Votre panier est vide', 'class' => 'danger']);
         }
 
 
@@ -128,8 +108,6 @@ class StripeController extends Controller
     public function customerOrder()
     {
         $user = Auth::user();
-
-
 
         $orderData = Order::where('user_id', $user->id)
             ->latest('order_date')
@@ -148,13 +126,4 @@ class StripeController extends Controller
         ]);
     }
 
-
-
-    public function paymentProcess(){
-
-
-        //  form with hidden input (payment_method)
-        // Add stripe js in 'extra-js' yield 
-
-    }
 }
