@@ -69,7 +69,7 @@
     @yield('content')
 
     </div>
-
+    @yield('extra-js')
 </body>
 
 </html>

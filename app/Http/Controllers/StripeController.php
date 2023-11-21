@@ -109,4 +109,14 @@ class StripeController extends Controller
 
         ]);
     }
+
+
+
+    public function paymentProcess(){
+
+
+        //  form with hidden input (payment_method)
+        // Add stripe js in 'extra-js' yield 
+
+    }
 }
